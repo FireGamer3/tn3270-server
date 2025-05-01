@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "rootDir": "src",
+        "target": "esnext",
+        "module": "esnext",
+        "outDir": "dist/esm",
+        "noUncheckedIndexedAccess": true,
+        "noEmit": true,
+        "resolveJsonModule": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "typedocOptions": {
+        "entryPoints": ["src/index.ts"],
+        "out": "docs"
+    },
+    "include": ["src/**/*", "test_bot"],
+    "exclude": ["node_modules", "automatedtests/*", "dist"]
+}
