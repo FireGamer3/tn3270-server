@@ -21,71 +21,53 @@ import {
     startFieldControlCharacter,
     wccToControlCharacter,
 } from './util/conversion';
+import Server from './classes/server';
 
 const PORT = 2323;
+const server = new Server();
 
-const server = net.createServer((socket) => {
-    console.log('🖧  Client connected:', socket.remoteAddress, socket.remotePort);
+const helloScreen = [
+    wccToControlCharacter(false, true, true, true),
+    SET_BUFFER_ADDRESS,
+    ...convertPosToControlCharacter(1, 1),
+    START_FIELD,
+    startFieldControlCharacter(true, false, 'NORMAL', false),
+    REPEAT_TO_ADDRESS,
+    ...convertPosToControlCharacter(1, 80),
+    ...a2e(':')
+        .split('')
+        .map((c) => c.charCodeAt(0)),
+    SET_BUFFER_ADDRESS,
+    ...convertPosToControlCharacter(10, 33),
+    START_FIELD,
+    startFieldControlCharacter(true, false, 'INTENSITY', false),
+    ...a2e('Hello World')
+        .split('')
+        .map((c) => c.charCodeAt(0)),
+    SET_BUFFER_ADDRESS,
+    ...convertPosToControlCharacter(11, 8),
+    START_FIELD,
+    startFieldControlCharacter(true, false, 'INTENSITY', false),
+    ...a2e(`Running on node ${process.version} at ${new Date().toTimeString()}`)
+        .split('')
+        .map((c) => c.charCodeAt(0)),
+    SET_BUFFER_ADDRESS,
+    ...convertPosToControlCharacter(24, 1),
+    START_FIELD,
+    startFieldControlCharacter(true, false, 'NORMAL', false),
+    REPEAT_TO_ADDRESS,
+    ...convertPosToControlCharacter(24, 80),
+    ...a2e(':')
+        .split('')
+        .map((c) => c.charCodeAt(0)),
+];
 
-    console.log('🖧 Negotiating telnet options...');
-    socket.write(Buffer.from([IAC, DO, TERMINAL_TYPE]));
-    socket.write(Buffer.from([IAC, SB, TERMINAL_TYPE, SEND, IAC, SE]));
-    socket.write(Buffer.from([IAC, DO, EOR]));
-    socket.write(Buffer.from([IAC, DO, BINARY]));
-    socket.write(Buffer.from([IAC, WILL, EOR, IAC, WILL, BINARY]));
-    console.log('🖧 Sending Initial Hello World Field Data...');
-    const helloScreen = [
-        wccToControlCharacter(false, false, true, true),
-        SET_BUFFER_ADDRESS,
-        ...convertPosToControlCharacter(1, 1),
-        START_FIELD,
-        startFieldControlCharacter(true, false, 'NORMAL', false),
-        REPEAT_TO_ADDRESS,
-        ...convertPosToControlCharacter(1, 80),
-        ...a2e(':')
-            .split('')
-            .map((c) => c.charCodeAt(0)),
-        SET_BUFFER_ADDRESS,
-        ...convertPosToControlCharacter(10, 33),
-        START_FIELD,
-        startFieldControlCharacter(true, false, 'INTENSITY', false),
-        ...a2e('Hello World')
-            .split('')
-            .map((c) => c.charCodeAt(0)),
-        SET_BUFFER_ADDRESS,
-        ...convertPosToControlCharacter(24, 1),
-        START_FIELD,
-        startFieldControlCharacter(true, false, 'NORMAL', false),
-        REPEAT_TO_ADDRESS,
-        ...convertPosToControlCharacter(24, 80),
-        ...a2e(':')
-            .split('')
-            .map((c) => c.charCodeAt(0)),
-    ];
-    console.log(helloScreen);
-    socket.write(Buffer.from(helloScreen));
-    let connected = false;
-    setTimeout(() => {
-        connected = true;
-    }, 500);
-
-    socket.on('data', (data) => {
-        const convertedData = Array.from(data);
-        if (connected) {
-            console.log('📡 Client data:', Array.from(data));
-            console.log(convertedData.map((b) => b.toString(16)));
-        }
+async function main() {
+    server.listen(PORT);
+    server.on('connection', (s) => {
+        server.send(s, Buffer.from(helloScreen));
+        console.log('Sent hello screen to client:', s.remoteAddress, s.remotePort);
     });
+}
 
-    socket.on('end', () => console.log('🔌 Client disconnected'));
-    socket.on('close', () => console.log('🔌 Client disconnected'));
-    socket.on('error', (err) => {
-        if (err.message === 'read ECONNRESET') {
-            console.log('Client disconnected');
-        } else console.error(err);
-    });
-});
-
-server.listen(PORT, () => {
-    console.log(`⚡ TN3270 server listening on port ${PORT}`);
-});
+main();
