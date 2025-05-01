@@ -12,6 +12,7 @@ import {
     TERMINAL_TYPE,
     SET_BUFFER_ADDRESS,
     START_FIELD,
+    REPEAT_TO_ADDRESS,
 } from './util/constants';
 
 import {
@@ -26,25 +27,43 @@ const PORT = 2323;
 const server = net.createServer((socket) => {
     console.log('🖧  Client connected:', socket.remoteAddress, socket.remotePort);
 
+    console.log('🖧 Negotiating telnet options...');
     socket.write(Buffer.from([IAC, DO, TERMINAL_TYPE]));
     socket.write(Buffer.from([IAC, SB, TERMINAL_TYPE, SEND, IAC, SE]));
     socket.write(Buffer.from([IAC, DO, EOR]));
     socket.write(Buffer.from([IAC, DO, BINARY]));
     socket.write(Buffer.from([IAC, WILL, EOR, IAC, WILL, BINARY]));
-    console.log('🖧 Negotiating telnet options...');
     console.log('🖧 Sending Initial Hello World Field Data...');
-    socket.write(
-        Buffer.from([
-            wccToControlCharacter(false, false, true, true),
-            SET_BUFFER_ADDRESS,
-            ...convertPosToControlCharacter(10, 33),
-            START_FIELD,
-            startFieldControlCharacter(true, true, 'INTENSITY', false),
-            ...a2e('Hello World')
-                .split('')
-                .map((c) => c.charCodeAt(0)),
-        ]),
-    );
+    const helloScreen = [
+        wccToControlCharacter(false, false, true, true),
+        SET_BUFFER_ADDRESS,
+        ...convertPosToControlCharacter(1, 1),
+        START_FIELD,
+        startFieldControlCharacter(true, false, 'NORMAL', false),
+        REPEAT_TO_ADDRESS,
+        ...convertPosToControlCharacter(1, 80),
+        ...a2e(':')
+            .split('')
+            .map((c) => c.charCodeAt(0)),
+        SET_BUFFER_ADDRESS,
+        ...convertPosToControlCharacter(2, 33),
+        START_FIELD,
+        startFieldControlCharacter(true, false, 'INTENSITY', false),
+        ...a2e('Hello World')
+            .split('')
+            .map((c) => c.charCodeAt(0)),
+        SET_BUFFER_ADDRESS,
+        ...convertPosToControlCharacter(3, 1),
+        START_FIELD,
+        startFieldControlCharacter(true, false, 'NORMAL', false),
+        REPEAT_TO_ADDRESS,
+        ...convertPosToControlCharacter(3, 80),
+        ...a2e(':')
+            .split('')
+            .map((c) => c.charCodeAt(0)),
+    ];
+    console.log(helloScreen);
+    socket.write(Buffer.from(helloScreen));
     let connected = false;
     setTimeout(() => {
         connected = true;
