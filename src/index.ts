@@ -46,18 +46,18 @@ const server = net.createServer((socket) => {
             .split('')
             .map((c) => c.charCodeAt(0)),
         SET_BUFFER_ADDRESS,
-        ...convertPosToControlCharacter(2, 33),
+        ...convertPosToControlCharacter(10, 33),
         START_FIELD,
         startFieldControlCharacter(true, false, 'INTENSITY', false),
         ...a2e('Hello World')
             .split('')
             .map((c) => c.charCodeAt(0)),
         SET_BUFFER_ADDRESS,
-        ...convertPosToControlCharacter(3, 1),
+        ...convertPosToControlCharacter(24, 1),
         START_FIELD,
         startFieldControlCharacter(true, false, 'NORMAL', false),
         REPEAT_TO_ADDRESS,
-        ...convertPosToControlCharacter(3, 80),
+        ...convertPosToControlCharacter(24, 80),
         ...a2e(':')
             .split('')
             .map((c) => c.charCodeAt(0)),
@@ -74,7 +74,6 @@ const server = net.createServer((socket) => {
         if (connected) {
             console.log('📡 Client data:', Array.from(data));
             console.log(convertedData.map((b) => b.toString(16)));
-            console.log('📡 Client data ascii:', data);
         }
     });
 
