@@ -5,6 +5,11 @@ export const SEND = 242;
 export const WILL = 251;
 export const SB = 250;
 export const SE = 240;
+export const DATA_TYPE = 0x00; // 3270-DATA
+export const REQUEST_FLAG = 0x00; // no request
+export const RESPONSE_FLAG = 0x00; // no response expected
+export const SEQ_HIGH = 0x00; // sequence number
+export const SEQ_LOW = 0x00;
 
 // Telnet option codes
 export const BINARY = 0;
@@ -16,10 +21,16 @@ export const TN3270E = 40;
 export const START_FIELD = 0x1d;
 export const START_FIELD_EXTENDED = 0x29;
 export const SET_BUFFER_ADDRESS = 0x11;
+export const SET_ATTRIBUTE = 0x28;
 export const INSERT_CURSOR = 0x13;
 export const PROGRAM_TAB = 0x05;
 export const REPEAT_TO_ADDRESS = 0x3c;
 export const ERASE_UNPROTECTED_TO_ADDRESS = 0x12;
+export const ESCAPE_CHAR = 0x27;
+export const ERASE_WRITE = 0xf5;
+
+export const HIGHLIGHT_ATTR_TYPE = 0x41;
+export const COLOR_ATTR_TYPE = 0x42;
 
 export const EXTENDED_HIGHLIGHTING = {
     DEFAULT: 0x00,

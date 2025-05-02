@@ -72,22 +72,19 @@ export function startFieldControlCharacter(
     return ControlCharacterIO[flags]!;
 }
 
-export function a2e(ascii: string) {
-    return ascii
-        .split('')
-        .map((c) => {
-            const ebcdicCode = ebcdic[c.charCodeAt(0) as keyof typeof ebcdic];
-            return ebcdicCode ? String.fromCharCode(ebcdicCode as number) : '?';
-        })
-        .join('');
+export function a2e(input: Buffer | string): Buffer {
+    const src = typeof input === 'string' ? Buffer.from(input, 'utf8') : input;
+    const dst = Buffer.alloc(src.length);
+    for (let i = 0; i < src.length; i++) {
+        dst[i] = ebcdic[src[i] as keyof typeof ebcdic] as number;
+    }
+    return dst;
 }
 
-export function e2a(ebcdic: string) {
-    return ebcdic
-        .split('')
-        .map((c) => {
-            const asciiCode = ascii[c.charAt(0) as keyof typeof ascii];
-            return asciiCode ? String.fromCharCode(asciiCode as number) : '?';
-        })
-        .join('');
+export function e2a(input: Buffer): string {
+    let result = '';
+    for (const b of input) {
+        result += String.fromCharCode(ascii[b as keyof typeof ascii] as number);
+    }
+    return result;
 }
