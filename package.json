@@ -1,5 +1,5 @@
 {
-    "name": "terminal-man",
+    "name": "tn3270-server",
     "version": "0.0.1",
     "description": "A 3270 terminal server written in TypeScript.",
     "main": "./dist/index.cjs",

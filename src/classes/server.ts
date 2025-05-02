@@ -13,6 +13,7 @@ import {
     AID,
     Aid,
     WRITE,
+    EOR,
 } from '@/util/constants';
 import { Socket, Server as netServer, createServer } from 'node:net';
 import { readParser } from './parsers/readParser';
@@ -133,7 +134,7 @@ class Server extends EventEmitter {
     sendWithClear(socket: Socket, data: Buffer) {
         if (this.sockets.has(socket)) {
             const header = Buffer.from([IAC, ERASE_WRITE, IAC]);
-            const footer = Buffer.from([IAC, EOR_FLAG]);
+            const footer = Buffer.from([IAC, EOR]);
             socket.write(Buffer.concat([header, data, footer]));
         } else {
             throw new Error('Socket is not connected');
@@ -149,7 +150,7 @@ class Server extends EventEmitter {
     sendWithoutClear(socket: Socket, data: Buffer) {
         if (this.sockets.has(socket)) {
             const header = Buffer.from([IAC, WRITE, IAC]);
-            const footer = Buffer.from([IAC, EOR_FLAG]);
+            const footer = Buffer.from([IAC, EOR]);
             socket.write(Buffer.concat([header, data, footer]));
         } else {
             throw new Error('Socket is not connected');
