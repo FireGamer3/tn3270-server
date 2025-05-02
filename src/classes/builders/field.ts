@@ -52,7 +52,7 @@ export default class Field {
         this.applyFieldHeader();
         this.applyAttributeOptions();
         const end = this.position;
-        end.col += length;
+        end.col += length + 1;
         while (end.col > 80) {
             end.col -= 80;
             end.row++;
@@ -69,7 +69,7 @@ export default class Field {
         this.applyFieldHeader();
         this.applyAttributeOptions();
         const end = this.position;
-        end.col += length;
+        end.col += length + 1;
         while (end.col > 80) {
             end.col -= 80;
             end.row++;
@@ -108,7 +108,7 @@ export default class Field {
         this.applyFieldHeader();
         this.applyAttributeOptions();
         const end = this.position;
-        end.col += length;
+        end.col += length + 1;
         while (end.col > 80) {
             end.col -= 80;
             end.row++;

@@ -5,10 +5,11 @@ export const SEND = 242;
 export const WILL = 251;
 export const SB = 250;
 export const SE = 240;
+export const EOR = 0xf1;
 
 // Telnet option codes
 export const BINARY = 0;
-export const EOR = 25;
+export const EOR_FLAG = 25;
 export const TERMINAL_TYPE = 24;
 export const TN3270E = 40;
 
@@ -21,7 +22,7 @@ export const INSERT_CURSOR = 0x13;
 export const PROGRAM_TAB = 0x05;
 export const REPEAT_TO_ADDRESS = 0x3c;
 export const ERASE_UNPROTECTED_TO_ADDRESS = 0x12;
-export const ESCAPE_CHAR = 0x27;
+export const WRITE = 0xf1;
 export const ERASE_WRITE = 0xf5;
 
 export const HIGHLIGHT_ATTR_TYPE = 0x41;
@@ -49,3 +50,38 @@ export const COLORS = {
 } as const;
 
 export type Colors = (typeof COLORS)[keyof typeof COLORS];
+
+export const AID = {
+    NONE: 0x60,
+    ENTER: 0x7d,
+    PF1: 0xf1,
+    PF2: 0xf2,
+    PF3: 0xf3,
+    PF4: 0xf4,
+    PF5: 0xf5,
+    PF6: 0xf6,
+    PF7: 0xf7,
+    PF8: 0xf8,
+    PF9: 0xf9,
+    PF10: 0xf10,
+    PF11: 0xf11,
+    PF12: 0xf12,
+    PF13: 0xf13,
+    PF14: 0xf14,
+    PF15: 0xf15,
+    PF16: 0xf16,
+    PF17: 0xf17,
+    PF18: 0xf18,
+    PF19: 0xf19,
+    PF20: 0xf20,
+    PF21: 0xf21,
+    PF22: 0xf22,
+    PF23: 0xf23,
+    PF24: 0xf24,
+    PA1: 0x6c,
+    PA2: 0x6e,
+    PA3: 0x6b,
+    CLEAR: 0x6d,
+} as const;
+
+export type Aid = (typeof AID)[keyof typeof AID];

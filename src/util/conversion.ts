@@ -1,3 +1,5 @@
+import { Aid } from './constants';
+
 const ebcdic = [
     0, 1, 2, 3, 55, 45, 46, 47, 22, 5, 37, 11, 12, 13, 14, 15, 16, 17, 18, 19, 60, 61, 50, 38, 24,
     25, 63, 39, 28, 29, 30, 31, 64, 90, 127, 123, 91, 108, 80, 125, 77, 93, 92, 78, 107, 96, 75, 97,
@@ -42,6 +44,12 @@ export function convertPosToControlCharacter(row: number, col: number) {
     const lowerSixBits = position & 0x3f;
     const upperSixBits = (position >> 6) & 0x3f;
     return [ControlCharacterIO[upperSixBits]!, ControlCharacterIO[lowerSixBits]!];
+}
+
+export function convertControlCharacterToPos(high: number, low: number) {
+    let highIndex = ControlCharacterIO.indexOf(high);
+    let lowIndex = ControlCharacterIO.indexOf(low);
+    return (highIndex << 6) + lowIndex;
 }
 
 export function wccToControlCharacter(
