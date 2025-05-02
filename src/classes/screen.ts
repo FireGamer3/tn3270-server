@@ -1,5 +1,5 @@
 import { WccControlCharacterOptions } from '../types';
-import { convertPosToControlCharacter } from '../util/conversion';
+import { convertPosToControlCharacter, wccToControlCharacter } from '../util/conversion';
 import Field from './field';
 
 export default class Screen {
@@ -20,5 +20,21 @@ export default class Screen {
         cb(field);
         this._fields.push(field);
         return this;
+    }
+
+    build() {
+        const final: number[] = [];
+        final.push(
+            wccToControlCharacter(
+                this.wccOptions.reset,
+                this.wccOptions.alarm,
+                this.wccOptions.kybRestore,
+                this.wccOptions.resetMDT,
+            ),
+        );
+        this._fields.forEach((f) => {
+            final.push(...f.data);
+        });
+        return final;
     }
 }

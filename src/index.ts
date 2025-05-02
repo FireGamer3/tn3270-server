@@ -1,27 +1,12 @@
-// src/server.ts
-import net from 'net';
 import {
-    IAC,
-    DO,
-    SEND,
-    WILL,
-    SB,
-    SE,
-    EOR,
-    BINARY,
-    TERMINAL_TYPE,
     SET_BUFFER_ADDRESS,
     START_FIELD,
     REPEAT_TO_ADDRESS,
-    ESCAPE_CHAR,
-    ERASE_WRITE,
-    TN3270E,
-    DATA_TYPE,
-    REQUEST_FLAG,
-    RESPONSE_FLAG,
-    SEQ_HIGH,
-    SEQ_LOW,
+    Colors,
+    COLORS,
+    EXTENDED_HIGHLIGHTING,
 } from './util/constants';
+import Screen from './classes/screen';
 
 import {
     a2e,
@@ -33,45 +18,84 @@ import Server from './classes/server';
 
 const PORT = 2323;
 const server = new Server();
-
-const helloScreen = [
-    wccToControlCharacter(false, true, true, true),
-    SET_BUFFER_ADDRESS,
-    ...convertPosToControlCharacter(1, 1),
-    START_FIELD,
-    startFieldControlCharacter(true, false, 'NORMAL', false),
-    REPEAT_TO_ADDRESS,
-    ...convertPosToControlCharacter(1, 80),
-    ...a2e(':'),
-    SET_BUFFER_ADDRESS,
-    ...convertPosToControlCharacter(1, 3),
-    START_FIELD,
-    startFieldControlCharacter(true, false, 'NORMAL', false),
-    ...a2e('MENU '),
-    SET_BUFFER_ADDRESS,
-    ...convertPosToControlCharacter(10, 33),
-    START_FIELD,
-    startFieldControlCharacter(true, false, 'INTENSITY', false),
-    ...a2e('Hello World'),
-    SET_BUFFER_ADDRESS,
-    ...convertPosToControlCharacter(11, 8),
-    START_FIELD,
-    startFieldControlCharacter(true, false, 'INTENSITY', false),
-    ...a2e(`Running on node ${process.version} at ${new Date().toTimeString()}`),
-    SET_BUFFER_ADDRESS,
-    ...convertPosToControlCharacter(24, 1),
-    START_FIELD,
-    startFieldControlCharacter(true, false, 'NORMAL', false),
-    REPEAT_TO_ADDRESS,
-    ...convertPosToControlCharacter(24, 80),
-    ...a2e(':'),
-];
+const newHello = new Screen({ reset: false, alarm: false, kybRestore: true, resetMDT: true })
+    .addField((f) => {
+        f.setPosition({ row: 1, col: 1 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.YELLOW)
+            .asRepeatString(':', 79);
+    })
+    .addField((f) => {
+        f.setPosition({ row: 1, col: 3 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.YELLOW)
+            .asOutputString('MENU ');
+    })
+    .addField((f) => {
+        f.setPosition({ row: 1, col: 10 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.YELLOW)
+            .asOutputString(`NODE VER: ${process.version} `);
+    })
+    .addField((f) => {
+        f.setPosition({ row: 2, col: 1 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.BLUE)
+            .asOutputString(new Date().toTimeString());
+    })
+    .addField((f) => {
+        f.setPosition({ row: 24, col: 1 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.YELLOW)
+            .asRepeatString(':', 79);
+    })
+    .addField((f) => {
+        f.setPosition({ row: 10, col: 10 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.WHITE)
+            .asOutputString('Name . . . .');
+    })
+    .addField((f) => {
+        f.setPosition({ row: 11, col: 10 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.WHITE)
+            .asOutputString('Age  . . . . .');
+    })
+    .addField((f) => {
+        f.setPosition({ row: 12, col: 10 })
+            .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.WHITE)
+            .asOutputString('Gender . . .');
+    })
+    .addField((f) => {
+        f.setPosition({ row: 10, col: 24 })
+            .setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.YELLOW)
+            .setHighlight(EXTENDED_HIGHLIGHTING.UNDERSCORE)
+            .asInputString(20);
+    })
+    .addField((f) => {
+        f.setPosition({ row: 11, col: 24 })
+            .setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: true })
+            .setColor(COLORS.YELLOW)
+            .setHighlight(EXTENDED_HIGHLIGHTING.UNDERSCORE)
+            .asInputNumber(20);
+    })
+    .addField((f) => {
+        f.setPosition({ row: 12, col: 24 })
+            .setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: false })
+            .setColor(COLORS.YELLOW)
+            .setHighlight(EXTENDED_HIGHLIGHTING.UNDERSCORE)
+            .asInputString(10);
+    })
+    .build();
 
 server.listen(PORT);
 server.on('connection', (s) => {
-    server.send(s, Buffer.from(helloScreen));
+    console.log(newHello.map((b) => b.toString(16)));
+    server.send(s, Buffer.from(newHello));
     console.log('Sent hello screen to client:', s.remoteAddress, s.remotePort);
 });
 server.on('data', (s, data) => {
-    server.send(s, Buffer.from(helloScreen));
+    server.send(s, Buffer.from(newHello));
 });
