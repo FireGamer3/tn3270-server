@@ -23,7 +23,7 @@
         "build:esm": "esbuild --platform=node --bundle --target=es2022 --format=esm --outfile=dist/index.mjs src/index.ts",
         "build:types": "dts-bundle-generator --out-file=dist/index.d.ts src/index.ts && shx cp dist/index.d.ts dist/index.d.cts && shx cp dist/index.d.ts dist/index.d.mts",
         "build": "shx rm -rf -fr dist/* && pnpm run build:cjs && pnpm run build:esm && pnpm run build:types",
-        "dev": "tsx watch src/index.ts"
+        "dev": "tsx watch src/tests/initial/index.ts"
     },
     "files": [
         "dist/",

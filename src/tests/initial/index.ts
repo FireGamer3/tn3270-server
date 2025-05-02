@@ -1,24 +1,11 @@
-import {
-    SET_BUFFER_ADDRESS,
-    START_FIELD,
-    REPEAT_TO_ADDRESS,
-    Colors,
-    COLORS,
-    EXTENDED_HIGHLIGHTING,
-} from './util/constants';
-import Screen from './classes/screen';
+import { COLORS, EXTENDED_HIGHLIGHTING } from '@/util/constants';
+import ScreenBuilder from '@/classes/builders/screenBuilder';
 
-import {
-    a2e,
-    convertPosToControlCharacter,
-    startFieldControlCharacter,
-    wccToControlCharacter,
-} from './util/conversion';
-import Server from './classes/server';
+import Server from '@/classes/server';
 
 const PORT = 2323;
 const server = new Server();
-const newHello = new Screen({ reset: false, alarm: false, kybRestore: true, resetMDT: true })
+const newHello = new ScreenBuilder({ reset: false, alarm: false, kybRestore: true, resetMDT: true })
     .addField((f) => {
         f.setPosition({ row: 1, col: 1 })
             .setOptions({ isProtected: true, display: 'NORMAL', mdt: false, numeric: false })
@@ -68,24 +55,39 @@ const newHello = new Screen({ reset: false, alarm: false, kybRestore: true, rese
             .asOutputString('Gender . . .');
     })
     .addField((f) => {
+        f.setPosition({ row: 10, col: 24 });
+        f.setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: false });
+        f.setColor(COLORS.YELLOW);
+        f.asOutputString('____________________');
+    })
+    .addField((f) => {
+        f.setPosition({ row: 11, col: 24 });
+        f.setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: false });
+        f.setColor(COLORS.YELLOW);
+        f.asOutputString('___');
+    })
+    .addField((f) => {
+        f.setPosition({ row: 12, col: 24 });
+        f.setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: false });
+        f.setColor(COLORS.YELLOW);
+        f.asOutputString('__________');
+    })
+    .addField((f) => {
         f.setPosition({ row: 10, col: 24 })
             .setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: false })
             .setColor(COLORS.YELLOW)
-            .setHighlight(EXTENDED_HIGHLIGHTING.UNDERSCORE)
             .asInputString(20);
     })
     .addField((f) => {
         f.setPosition({ row: 11, col: 24 })
             .setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: true })
             .setColor(COLORS.YELLOW)
-            .setHighlight(EXTENDED_HIGHLIGHTING.UNDERSCORE)
-            .asInputNumber(20);
+            .asInputNumber(4);
     })
     .addField((f) => {
         f.setPosition({ row: 12, col: 24 })
             .setOptions({ isProtected: false, display: 'NORMAL', mdt: false, numeric: false })
             .setColor(COLORS.YELLOW)
-            .setHighlight(EXTENDED_HIGHLIGHTING.UNDERSCORE)
             .asInputString(10);
     })
     .build();

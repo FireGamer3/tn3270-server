@@ -1,4 +1,4 @@
-import { FieldControlCharacterOptions, Position } from '../types';
+import { FieldControlCharacterOptions, Position } from '../../types';
 import {
     COLOR_ATTR_TYPE,
     Colors,
@@ -9,8 +9,12 @@ import {
     SET_ATTRIBUTE,
     SET_BUFFER_ADDRESS,
     START_FIELD,
-} from '../util/constants';
-import { a2e, convertPosToControlCharacter, startFieldControlCharacter } from '../util/conversion';
+} from '../../util/constants';
+import {
+    a2e,
+    convertPosToControlCharacter,
+    startFieldControlCharacter,
+} from '../../util/conversion';
 
 export default class Field {
     options: FieldControlCharacterOptions | undefined;

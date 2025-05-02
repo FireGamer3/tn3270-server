@@ -1,8 +1,8 @@
-import { WccControlCharacterOptions } from '../types';
-import { convertPosToControlCharacter, wccToControlCharacter } from '../util/conversion';
+import { WccControlCharacterOptions } from '../../types';
+import { wccToControlCharacter } from '../../util/conversion';
 import Field from './field';
 
-export default class Screen {
+export default class ScreenBuilder {
     wccOptions: WccControlCharacterOptions;
     _fields: Field[] = [];
 

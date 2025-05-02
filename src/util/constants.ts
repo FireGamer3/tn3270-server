@@ -5,11 +5,6 @@ export const SEND = 242;
 export const WILL = 251;
 export const SB = 250;
 export const SE = 240;
-export const DATA_TYPE = 0x00; // 3270-DATA
-export const REQUEST_FLAG = 0x00; // no request
-export const RESPONSE_FLAG = 0x00; // no response expected
-export const SEQ_HIGH = 0x00; // sequence number
-export const SEQ_LOW = 0x00;
 
 // Telnet option codes
 export const BINARY = 0;
