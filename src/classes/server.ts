@@ -1,4 +1,4 @@
-import { EventEmitter } from 'node:events';
+import { EventEmitter } from 'events';
 import { IAC, ERASE_WRITE, WRITE, EOR } from '@/util/constants';
 import { Socket, Server as netServer, createServer } from 'node:net';
 import Client from './client';
@@ -45,11 +45,11 @@ class Server extends EventEmitter {
                 this.clients.delete(client);
                 this.emit('disconnection', client);
             });
-            client.on('error', (err) => {
+            client.on('error', (err: Error) => {
                 this.emit('error', client, err);
             });
 
-            client.on('data', (data) => {
+            client.on('data', (data: ParsedData) => {
                 this.emit('data', client, data);
             });
         });

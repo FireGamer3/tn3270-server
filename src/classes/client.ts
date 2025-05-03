@@ -20,14 +20,7 @@ import { readParser } from './parsers/readParser';
 import { e2a } from '../util/conversion';
 import { ParsedData } from '../types';
 
-declare interface Client {
-    on(event: 'ready', listener: () => void): this;
-    on(event: 'data', listener: (data: ParsedData) => void): this;
-    on(event: 'disconnect', listener: () => void): this;
-    on(event: 'error', listener: (err: Error) => void): this;
-}
-
-class Client extends EventEmitter {
+export default class Client extends EventEmitter {
     private _id: string;
     private _socket: Socket;
     private ready: boolean = false;
@@ -141,5 +134,3 @@ class Client extends EventEmitter {
         }
     }
 }
-
-export default Client;
