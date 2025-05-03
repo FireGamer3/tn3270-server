@@ -1,11 +1,11 @@
 import { FieldControlCharacterOptions, Position } from '../../types';
 import {
     COLOR_ATTR_TYPE,
-    Colors,
-    ExtendedHighlighting,
+    COLORS,
+    EXTENDED_HIGHLIGHTING,
+    FIELD_DISPLAY_OPTIONS,
     HIGHLIGHT_ATTR_TYPE,
     REPEAT_TO_ADDRESS,
-    SE,
     SET_ATTRIBUTE,
     SET_BUFFER_ADDRESS,
     START_FIELD,
@@ -29,12 +29,12 @@ export default class Field {
         return this;
     }
 
-    setColor(color: Colors) {
+    setColor(color: COLORS) {
         this.color = color;
         return this;
     }
 
-    setHighlight(highlight: ExtendedHighlighting) {
+    setHighlight(highlight: EXTENDED_HIGHLIGHTING) {
         this.highlight = highlight;
         return this;
     }
@@ -49,6 +49,7 @@ export default class Field {
             throw new Error('Field options must be set before asInputString can be called');
         if (this.options.isProtected) this.options.isProtected = false;
         if (this.options.numeric) this.options.numeric = false;
+        if (!this.options.mdt) this.options.mdt = true;
         this.applyFieldHeader();
         this.applyAttributeOptions();
         const end = this.position;
@@ -66,6 +67,7 @@ export default class Field {
             throw new Error('Field options must be set before asInputString can be called');
         if (this.options.isProtected) this.options.isProtected = false;
         if (!this.options.numeric) this.options.numeric = true;
+        if (!this.options.mdt) this.options.mdt = true;
         this.applyFieldHeader();
         this.applyAttributeOptions();
         const end = this.position;
@@ -151,7 +153,7 @@ export default class Field {
             SET_BUFFER_ADDRESS,
             ...convertPosToControlCharacter(end.row, end.col),
             START_FIELD,
-            startFieldControlCharacter(true, false, 'NORMAL', false),
+            startFieldControlCharacter(true, false, FIELD_DISPLAY_OPTIONS.NORMAL, false),
         );
     }
 }

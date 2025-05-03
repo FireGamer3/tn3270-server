@@ -35,8 +35,18 @@ export const EXTENDED_HIGHLIGHTING = {
     UNDERSCORE: 0xf3,
 } as const;
 
-export type ExtendedHighlighting =
+export type EXTENDED_HIGHLIGHTING =
     (typeof EXTENDED_HIGHLIGHTING)[keyof typeof EXTENDED_HIGHLIGHTING];
+
+export const FIELD_DISPLAY_OPTIONS = {
+    NORMAL: 0x00,
+    NORMAL_LIGHT_PEN: 0x01,
+    INTENSITY: 0x02,
+    HIDDEN: 0x03,
+};
+
+export type FIELD_DISPLAY_OPTIONS =
+    (typeof FIELD_DISPLAY_OPTIONS)[keyof typeof FIELD_DISPLAY_OPTIONS];
 
 export const COLORS = {
     DEFAULT: 0x00,
@@ -49,7 +59,7 @@ export const COLORS = {
     WHITE: 0xf7,
 } as const;
 
-export type Colors = (typeof COLORS)[keyof typeof COLORS];
+export type COLORS = (typeof COLORS)[keyof typeof COLORS];
 
 export const AID = {
     NONE: 0x60,
@@ -84,4 +94,4 @@ export const AID = {
     CLEAR: 0x6d,
 } as const;
 
-export type Aid = (typeof AID)[keyof typeof AID];
+export type AID = (typeof AID)[keyof typeof AID];

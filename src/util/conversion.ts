@@ -1,4 +1,4 @@
-import { Aid } from './constants';
+import { FIELD_DISPLAY_OPTIONS } from './constants';
 
 const ebcdic = [
     0, 1, 2, 3, 55, 45, 46, 47, 22, 5, 37, 11, 12, 13, 14, 15, 16, 17, 18, 19, 60, 61, 50, 38, 24,
@@ -69,13 +69,28 @@ export function wccToControlCharacter(
 export function startFieldControlCharacter(
     isProtected: boolean,
     numeric: boolean,
-    display: 'NORMAL' | 'INTENSITY',
+    display: FIELD_DISPLAY_OPTIONS,
     mdt: boolean,
 ) {
     let flags = 0;
     if (isProtected) flags = flags | (1 << 5);
     if (numeric) flags = flags | (1 << 4);
-    if (display === 'INTENSITY') flags = flags | (1 << 3);
+    switch (display) {
+        case FIELD_DISPLAY_OPTIONS.NORMAL_LIGHT_PEN: {
+            flags = flags | (1 << 2);
+            break;
+        }
+        case FIELD_DISPLAY_OPTIONS.INTENSITY: {
+            flags = flags | (1 << 3);
+            break;
+        }
+        case FIELD_DISPLAY_OPTIONS.HIDDEN: {
+            flags = flags | (1 << 3);
+            flags = flags | (1 << 2);
+            break;
+        }
+    }
+    if (display === FIELD_DISPLAY_OPTIONS.INTENSITY) flags = flags | (1 << 3);
     if (mdt) flags = flags | (1 << 0);
     return ControlCharacterIO[flags]!;
 }

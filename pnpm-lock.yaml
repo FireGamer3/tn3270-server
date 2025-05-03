@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      ebcdic-ascii:
-        specifier: ^1.1.6
-        version: 1.1.6
     devDependencies:
       '@types/node':
         specifier: ^22.14.1
@@ -236,9 +232,6 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  ebcdic-ascii@1.1.6:
-    resolution: {integrity: sha512-Qr/O837I6jvFxoqG7vYnMWJULwm5u59LAdCZoSFdPm/b/kHBCrRl/NsOOvT+iqLBCjV5KA9zcmETiDowia92/g==}
-
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
 
@@ -295,10 +288,6 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
-
-  iconv-lite@0.6.3:
-    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
-    engines: {node: '>=0.10.0'}
 
   interpret@1.4.0:
     resolution: {integrity: sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==}
@@ -395,9 +384,6 @@ packages:
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
-
-  safer-buffer@2.1.2:
-    resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
   semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
@@ -612,12 +598,6 @@ snapshots:
       typescript: 5.8.3
       yargs: 17.7.2
 
-  ebcdic-ascii@1.1.6:
-    dependencies:
-      '@types/node': 22.14.1
-      iconv-lite: 0.6.3
-      typescript: 5.8.3
-
   emoji-regex@8.0.0: {}
 
   end-of-stream@1.4.4:
@@ -703,10 +683,6 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  iconv-lite@0.6.3:
-    dependencies:
-      safer-buffer: 2.1.2
-
   interpret@1.4.0: {}
 
   is-core-module@2.16.1:
@@ -780,8 +756,6 @@ snapshots:
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
-
-  safer-buffer@2.1.2: {}
 
   semver@5.7.2: {}
 
