@@ -1,6 +1,6 @@
 {
     "name": "tn3270-server",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A 3270 terminal server written in TypeScript.",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
@@ -36,7 +36,6 @@
     "license": "ISC",
     "devDependencies": {
         "@types/node": "^22.14.1",
-        "@types/ws": "^8.5.5",
         "dts-bundle-generator": "^9.0.0",
         "esbuild": "^0.25.2",
         "shx": "^0.4.0",

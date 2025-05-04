@@ -1,14 +1,15 @@
 import { FieldControlCharacterOptions, Position } from '../../types';
 import {
+    BASIC_FIELD_ATTRIBUTES,
     COLOR_ATTR_TYPE,
     COLORS,
     EXTENDED_HIGHLIGHTING,
     FIELD_DISPLAY_OPTIONS,
     HIGHLIGHT_ATTR_TYPE,
     REPEAT_TO_ADDRESS,
-    SET_ATTRIBUTE,
     SET_BUFFER_ADDRESS,
     START_FIELD,
+    START_FIELD_EXTENDED,
 } from '../../util/constants';
 import {
     a2e,
@@ -20,8 +21,8 @@ export default class Field {
     options: FieldControlCharacterOptions | undefined;
     position: Position = { row: 1, col: 1 };
     data: number[] = [];
-    color: number | undefined;
-    highlight: number | undefined;
+    color: COLORS = COLORS.DEFAULT;
+    highlight: EXTENDED_HIGHLIGHTING = EXTENDED_HIGHLIGHTING.DEFAULT;
     constructor() {}
 
     setOptions(options: FieldControlCharacterOptions) {
@@ -51,7 +52,6 @@ export default class Field {
         if (this.options.numeric) this.options.numeric = false;
         if (!this.options.mdt) this.options.mdt = true;
         this.applyFieldHeader();
-        this.applyAttributeOptions();
         const end = this.position;
         end.col += length + 1;
         while (end.col > 80) {
@@ -69,7 +69,6 @@ export default class Field {
         if (!this.options.numeric) this.options.numeric = true;
         if (!this.options.mdt) this.options.mdt = true;
         this.applyFieldHeader();
-        this.applyAttributeOptions();
         const end = this.position;
         end.col += length + 1;
         while (end.col > 80) {
@@ -86,7 +85,6 @@ export default class Field {
         if (!this.options.isProtected) this.options.isProtected = true;
         if (this.options.numeric) this.options.numeric = false;
         this.applyFieldHeader();
-        this.applyAttributeOptions();
         this.data.push(...a2e(string));
         return;
     }
@@ -97,7 +95,6 @@ export default class Field {
         if (!this.options.isProtected) this.options.isProtected = true;
         if (!this.options.numeric) this.options.numeric = true;
         this.applyFieldHeader();
-        this.applyAttributeOptions();
         this.data.push(...a2e(string));
         return;
     }
@@ -108,7 +105,6 @@ export default class Field {
         if (!this.options.isProtected) this.options.isProtected = true;
         if (this.options.numeric) this.options.numeric = false;
         this.applyFieldHeader();
-        this.applyAttributeOptions();
         const end = this.position;
         end.col += length + 1;
         while (end.col > 80) {
@@ -125,26 +121,43 @@ export default class Field {
     private applyFieldHeader() {
         if (!this.options)
             throw new Error('Field options must be set before asInputString can be called');
+        const isDefault =
+            this.color === COLORS.DEFAULT && this.highlight === EXTENDED_HIGHLIGHTING.DEFAULT;
         this.data.push(
             SET_BUFFER_ADDRESS,
             ...convertPosToControlCharacter(this.position.row, this.position.col),
-            START_FIELD,
-            startFieldControlCharacter(
-                this.options.isProtected,
-                this.options.numeric,
-                this.options.display,
-                this.options.mdt,
-            ),
         );
-    }
-
-    private applyAttributeOptions() {
-        if (this.color) {
-            this.data.push(SET_ATTRIBUTE, COLOR_ATTR_TYPE, this.color);
-        }
-
-        if (this.highlight) {
-            this.data.push(SET_ATTRIBUTE, HIGHLIGHT_ATTR_TYPE, this.highlight);
+        if (isDefault) {
+            this.data.push(
+                START_FIELD,
+                startFieldControlCharacter(
+                    this.options.isProtected,
+                    this.options.numeric,
+                    this.options.display,
+                    this.options.mdt,
+                ),
+            );
+        } else {
+            this.data.push(START_FIELD_EXTENDED);
+            let paramCount = 1;
+            if (this.color !== COLORS.DEFAULT) paramCount++;
+            if (this.highlight !== EXTENDED_HIGHLIGHTING.DEFAULT) paramCount++;
+            this.data.push(paramCount);
+            this.data.push(
+                BASIC_FIELD_ATTRIBUTES,
+                startFieldControlCharacter(
+                    this.options.isProtected,
+                    this.options.numeric,
+                    this.options.display,
+                    this.options.mdt,
+                ),
+            );
+            if (this.color !== COLORS.DEFAULT) {
+                this.data.push(COLOR_ATTR_TYPE, this.color);
+            }
+            if (this.highlight !== EXTENDED_HIGHLIGHTING.DEFAULT) {
+                this.data.push(HIGHLIGHT_ATTR_TYPE, this.highlight);
+            }
         }
     }
 

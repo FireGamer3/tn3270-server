@@ -11,15 +11,13 @@ export const EOR = 0xf1;
 export const BINARY = 0;
 export const EOR_FLAG = 25;
 export const TERMINAL_TYPE = 24;
-export const TN3270E = 40;
 
 // 3270 Commands
 export const START_FIELD = 0x1d;
 export const START_FIELD_EXTENDED = 0x29;
 export const SET_BUFFER_ADDRESS = 0x11;
-export const SET_ATTRIBUTE = 0x28;
+export const BASIC_FIELD_ATTRIBUTES = 0xc0;
 export const INSERT_CURSOR = 0x13;
-export const PROGRAM_TAB = 0x05;
 export const REPEAT_TO_ADDRESS = 0x3c;
 export const ERASE_UNPROTECTED_TO_ADDRESS = 0x12;
 export const WRITE = 0xf1;
@@ -32,7 +30,7 @@ export const EXTENDED_HIGHLIGHTING = {
     DEFAULT: 0x00,
     BLINK: 0xf1,
     REVERSE_VIDEO: 0xf2,
-    UNDERSCORE: 0xf3,
+    UNDERSCORE: 0xf4,
 } as const;
 
 export type EXTENDED_HIGHLIGHTING =

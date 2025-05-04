@@ -1,5 +1,4 @@
 import { ScreenBuilder, Server, Constants } from '../..';
-import { FIELD_DISPLAY_OPTIONS } from '../../util/constants';
 
 const PORT = 2323;
 const server = new Server();
@@ -14,7 +13,7 @@ const goodbyeScreen = new ScreenBuilder({
         f.setPosition({ row: 1, col: 1 })
             .setOptions({
                 isProtected: true,
-                display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                 mdt: false,
                 numeric: false,
             })
@@ -25,7 +24,7 @@ const goodbyeScreen = new ScreenBuilder({
         f.setPosition({ row: 1, col: 3 })
             .setOptions({
                 isProtected: true,
-                display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                 mdt: false,
                 numeric: false,
             })
@@ -36,7 +35,7 @@ const goodbyeScreen = new ScreenBuilder({
         f.setPosition({ row: 1, col: 10 })
             .setOptions({
                 isProtected: true,
-                display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                 mdt: false,
                 numeric: false,
             })
@@ -47,7 +46,7 @@ const goodbyeScreen = new ScreenBuilder({
         f.setPosition({ row: 2, col: 1 })
             .setOptions({
                 isProtected: true,
-                display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                 mdt: false,
                 numeric: false,
             })
@@ -78,7 +77,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 1, col: 1 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -89,7 +88,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 1, col: 3 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -100,7 +99,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 1, col: 10 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -111,7 +110,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 2, col: 1 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -122,7 +121,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 24, col: 1 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -133,7 +132,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 10, col: 10 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -144,7 +143,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 11, col: 10 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -155,7 +154,7 @@ function buildHelloScreen() {
             f.setPosition({ row: 12, col: 10 })
                 .setOptions({
                     isProtected: true,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
@@ -166,33 +165,36 @@ function buildHelloScreen() {
             f.setPosition({ row: 10, col: 24 })
                 .setOptions({
                     isProtected: false,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
                 .setColor(Constants.COLORS.YELLOW)
+                .setHighlight(Constants.EXTENDED_HIGHLIGHTING.UNDERSCORE)
                 .asInputString(20);
         })
         .addField((f) => {
             f.setPosition({ row: 11, col: 24 })
                 .setOptions({
                     isProtected: false,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: true,
                 })
                 .setColor(Constants.COLORS.YELLOW)
+                .setHighlight(Constants.EXTENDED_HIGHLIGHTING.UNDERSCORE)
                 .asInputNumber(3);
         })
         .addField((f) => {
             f.setPosition({ row: 12, col: 24 })
                 .setOptions({
                     isProtected: false,
-                    display: FIELD_DISPLAY_OPTIONS.NORMAL,
+                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
                     mdt: false,
                     numeric: false,
                 })
                 .setColor(Constants.COLORS.YELLOW)
+                .setHighlight(Constants.EXTENDED_HIGHLIGHTING.UNDERSCORE)
                 .asInputString(10);
         })
         .setStartPosition({ row: 10, col: 25 })

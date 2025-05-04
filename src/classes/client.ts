@@ -118,7 +118,6 @@ export default class Client extends EventEmitter {
                         };
                     }),
                 };
-                console.log('📡 Client data:', dataPayload);
                 this.emit('data', this, dataPayload);
             }
         }
