@@ -18,11 +18,12 @@ import {
 } from '../../util/conversion';
 
 export default class Field {
-    options: FieldControlCharacterOptions | undefined;
-    position: Position = { row: 1, col: 1 };
+    private options: FieldControlCharacterOptions | undefined;
+    private position: Position = { row: 1, col: 1 };
     data: number[] = [];
-    color: COLORS = COLORS.DEFAULT;
-    highlight: EXTENDED_HIGHLIGHTING = EXTENDED_HIGHLIGHTING.DEFAULT;
+    private color: COLORS = COLORS.DEFAULT;
+    private highlight: EXTENDED_HIGHLIGHTING = EXTENDED_HIGHLIGHTING.DEFAULT;
+    private centerMode: boolean = false;
     constructor() {}
 
     setOptions(options: FieldControlCharacterOptions) {
@@ -42,6 +43,11 @@ export default class Field {
 
     setPosition(position: Position) {
         this.position = position;
+        return this;
+    }
+
+    setCenterMode(centerMode: boolean) {
+        this.centerMode = centerMode;
         return this;
     }
 
@@ -84,7 +90,7 @@ export default class Field {
             throw new Error('Field options must be set before asInputString can be called');
         if (!this.options.isProtected) this.options.isProtected = true;
         if (this.options.numeric) this.options.numeric = false;
-        this.applyFieldHeader();
+        this.applyFieldHeader(string);
         this.data.push(...a2e(string));
         return;
     }
@@ -94,7 +100,7 @@ export default class Field {
             throw new Error('Field options must be set before asInputString can be called');
         if (!this.options.isProtected) this.options.isProtected = true;
         if (!this.options.numeric) this.options.numeric = true;
-        this.applyFieldHeader();
+        this.applyFieldHeader(string);
         this.data.push(...a2e(string));
         return;
     }
@@ -118,11 +124,18 @@ export default class Field {
         );
     }
 
-    private applyFieldHeader() {
+    private applyFieldHeader(data: string | null = null) {
         if (!this.options)
             throw new Error('Field options must be set before asInputString can be called');
         const isDefault =
             this.color === COLORS.DEFAULT && this.highlight === EXTENDED_HIGHLIGHTING.DEFAULT;
+
+        if (this.centerMode && data) {
+            this.position = {
+                row: this.position.row,
+                col: 40 - Math.floor(data.length / 2),
+            };
+        }
         this.data.push(
             SET_BUFFER_ADDRESS,
             ...convertPosToControlCharacter(this.position.row, this.position.col),

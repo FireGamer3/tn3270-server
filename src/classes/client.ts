@@ -118,7 +118,7 @@ export default class Client extends EventEmitter {
                         };
                     }),
                 };
-                this.emit('data', this, dataPayload);
+                this.emit('data', dataPayload);
             }
         }
     }
