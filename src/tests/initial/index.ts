@@ -1,4 +1,4 @@
-import { ScreenBuilder, Server, Constants, VERSION } from '../..';
+import { ScreenBuilder, Server, Constants } from '../..';
 
 const PORT = 2323;
 const server = new Server();
@@ -134,17 +134,6 @@ function buildHelloScreen() {
         })
         .addField((f) => {
             f.setPosition({ row: 24, col: 3 })
-                .setOptions({
-                    isProtected: true,
-                    display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
-                    mdt: false,
-                    numeric: false,
-                })
-                .setColor(Constants.COLORS.YELLOW)
-                .asOutputString(`TN3270 Server v${VERSION} `);
-        })
-        .addField((f) => {
-            f.setPosition({ row: 24, col: 26 })
                 .setOptions({
                     isProtected: true,
                     display: Constants.FIELD_DISPLAY_OPTIONS.NORMAL,
