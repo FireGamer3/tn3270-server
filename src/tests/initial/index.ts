@@ -74,7 +74,7 @@ server.on('data', (client, data) => {
 });
 
 function buildHelloScreen() {
-    return new ScreenBuilder({ reset: false, alarm: false, kybRestore: true, resetMDT: true })
+    return new ScreenBuilder({ reset: false, alarm: true, kybRestore: true, resetMDT: true })
         .addField((f) => {
             f.setPosition({ row: 1, col: 1 })
                 .setOptions({

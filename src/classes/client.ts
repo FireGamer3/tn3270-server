@@ -78,7 +78,7 @@ export default class Client extends EventEmitter {
      */
     sendWithClear(data: Buffer) {
         if (!this.ready) throw new Error('Client is not ready');
-        const header = Buffer.from([IAC, ERASE_WRITE, IAC]);
+        const header = Buffer.from([ERASE_WRITE]);
         const footer = Buffer.from([IAC, EOR]);
         this._socket.write(Buffer.concat([header, data, footer]));
     }
@@ -90,7 +90,7 @@ export default class Client extends EventEmitter {
      */
     sendWithoutClear(data: Buffer) {
         if (!this.ready) throw new Error('Client is not ready');
-        const header = Buffer.from([IAC, WRITE, IAC]);
+        const header = Buffer.from([WRITE]);
         const footer = Buffer.from([IAC, EOR]);
         this._socket.write(Buffer.concat([header, data, footer]));
     }
@@ -100,6 +100,7 @@ export default class Client extends EventEmitter {
     }
 
     private handleData(data: Buffer) {
+        if (!this.ready) return;
         const convertedData = Array.from(data);
         if (convertedData.length > 0) {
             if (convertedData[0] === IAC) {
