@@ -11,9 +11,6 @@ importers:
       '@types/node':
         specifier: ^22.14.1
         version: 22.14.1
-      '@types/ws':
-        specifier: ^8.5.5
-        version: 8.18.1
       dts-bundle-generator:
         specifier: ^9.0.0
         version: 9.5.1
@@ -196,9 +193,6 @@ packages:
 
   '@types/node@22.14.1':
     resolution: {integrity: sha512-u0HuPQwe/dHrItgHHpmw3N2fYCR6x4ivMNbPHRkBVP4CvN+kiRrKHWk3i8tXiO/joPwXLMYvF9TTF0eqgHIuOw==}
-
-  '@types/ws@8.18.1':
-    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -558,10 +552,6 @@ snapshots:
   '@types/node@22.14.1':
     dependencies:
       undici-types: 6.21.0
-
-  '@types/ws@8.18.1':
-    dependencies:
-      '@types/node': 22.14.1
 
   ansi-regex@5.0.1: {}
 
