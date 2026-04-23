@@ -4,6 +4,10 @@ A TN3270 server written in TypeScript. Inspired by [go3270 (A Go 3270 Server imp
 
 The goal of this project is a lot simpler than the original with the goal of making a MVP implementation of a TN3270 server. Abstractions are left to your discretion. I will get to making my own abstractions later in a separate project.
 
+# Note
+
+This version of the server was made a year ago and I plan on rewriting it entirely
+
 ## Installation
 
 ```bash
