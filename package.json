@@ -1,10 +1,10 @@
 {
     "name": "tn3270-server",
-    "version": "0.1.5",
+    "version": "0.2.0",
     "description": "A 3270 terminal server written in TypeScript.",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
+    "types": "./dist/index.d.cts",
     "type": "module",
     "exports": {
         ".": {
@@ -16,31 +16,28 @@
                 "types": "./dist/index.d.cts",
                 "default": "./dist/index.cjs"
             }
-        }
+        },
+        "./package.json": "./package.json"
     },
     "scripts": {
-        "build:cjs": "esbuild --platform=node --bundle --target=es2022 --format=cjs --outfile=dist/index.cjs src/index.ts",
-        "build:esm": "esbuild --platform=node --bundle --target=es2022 --format=esm --outfile=dist/index.mjs src/index.ts",
-        "build:types": "dts-bundle-generator --out-file=dist/index.d.ts src/index.ts && shx cp dist/index.d.ts dist/index.d.cts && shx cp dist/index.d.ts dist/index.d.mts",
-        "build": "shx rm -rf -fr dist/* && pnpm run build:cjs && pnpm run build:esm && pnpm run build:types",
-        "dev": "tsx watch src/tests/initial/index.ts"
+        "build": "tsdown",
+        "dev": "node --watch examples/demo.ts",
+        "start:demo": "node examples/demo.ts",
+        "test": "node --test \"test/**/*.test.ts\"",
+        "typecheck": "tsc -p src && tsc"
     },
     "files": [
         "dist/",
         "tsconfig.json"
     ],
     "engines": {
-        "node": ">= 16"
+        "node": ">=22"
     },
     "author": "FireGmr3",
     "license": "ISC",
     "devDependencies": {
-        "@types/node": "^22.14.1",
-        "dts-bundle-generator": "^9.0.0",
-        "esbuild": "^0.25.2",
-        "shx": "^0.4.0",
-        "tsx": "^4.19.4",
-        "typescript": "^5.1.6"
-    },
-    "dependencies": {}
+        "@types/node": "^22.20.5",
+        "tsdown": "^0.23.7",
+        "typescript": "^7.0.2"
+    }
 }

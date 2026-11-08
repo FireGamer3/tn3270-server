@@ -1,26 +1,34 @@
 {
     "compilerOptions": {
-        "declaration": true,
-        "strict": true,
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
-        "rootDir": "src",
-        "target": "esnext",
-        "module": "esnext",
-        "outDir": "dist/esm",
-        "noUncheckedIndexedAccess": true,
-        "noEmit": true,
+        // Language and environment: Node 22 is the oldest supported runtime.
+        "target": "es2024",
+        "lib": ["es2024"],
+        "types": ["node"],
+
+        // Modules: sources run directly under Node's type stripping (tests, demo)
+        // and are bundled by tsdown for publishing, so tsc only typechecks.
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "erasableSyntaxOnly": true,
+        "isolatedModules": true,
         "resolveJsonModule": true,
-        "paths": {
-            "@/*": ["./src/*"]
-        }
+        "noEmit": true,
+
+        // Type checking.
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noUncheckedSideEffectImports": true,
+
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
     },
-    "typedocOptions": {
-        "entryPoints": ["src/index.ts"],
-        "out": "docs"
-    },
-    "include": ["src/**/*", "test_bot"],
-    "exclude": ["node_modules", "automatedtests/*", "dist"]
+    "include": ["src", "test", "examples", "tsdown.config.ts"]
 }

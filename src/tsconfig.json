@@ -1,0 +1,10 @@
+{
+    // Published sources: declarations must be derivable per file so tsdown can
+    // emit .d.ts with oxc instead of running the type checker.
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "isolatedDeclarations": true
+    },
+    "include": ["."]
+}
