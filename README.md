@@ -2,8 +2,6 @@
 
 A TN3270 server written in TypeScript. 3270 terminal emulators (x3270, wc3270, c3270, Vista, ...) connect to it and are shown screens your code defines. Inspired by [go3270 (A Go 3270 Server implementation by Matthew R. Wilson)](https://github.com/racingmars/go3270/).
 
-> This branch is the rewrite and a WIP.
-
 ## Usage
 
 ```ts
